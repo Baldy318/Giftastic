@@ -1,0 +1,44 @@
+.jumbotron {
+	background: url(https://media.istockphoto.com/vectors/laughing-with-tears-and-pointing-emoticon-vector-id639765496?k=6&m=639765496&s=612x612&w=0&h=gir0xjNgUVuzISoAY0iOqw5sUZPPxi3Bwk5yLqkFS-g=) !important;
+	}
+
+
+.row {
+	text-align: center !important;
+}
+
+.col {
+	margin: 0 auto;
+}
+
+* {
+	box-sizing: border-box !important;
+}
+form.example button:hover {
+	background: #0b7dda;
+  }
+  
+  form.example::after {
+	content: "";
+	clear: both;
+	display: table;
+  }
+
+.container{
+	box-sizing: content-box;
+	background: white;
+	padding-bottom: 10%;
+	border: 1px;
+	border-color: rgb(5, 5, 5);
+	border-block-color: 
+}
+
+label {
+	color: black;
+	font-size: 25px;
+	margin-right: 10px;
+}
+
+.blueBorder {
+	border: #0b7dda;
+}
