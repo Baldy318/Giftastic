@@ -12,31 +12,33 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="assets/js/app1.js"></script>
+    
 
     <title>Comedians Giphies</title>
   </head>
-  <body>
+  <body card card-image style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg">
        
                 
-           <div class="row">
-                        
+           <div class="row"> 
+
+
                 <div class="col"></div>
             
         
                 <div class="col">
         
                     <h1 class="display-4 text-center">Gifs of Comedians</h1>
-                
-                   <p class="lead text-center">See Your Favorite Comedians in Gifs!</p>
+                    <p class="lead text-center">See Your Favorite Comedians in Gifs!</p>
                 
                 </div>
             
+
                 <div class="col"></div>
             
             </div>
 
-        <div class="jumbotron" >
+        
+        <div class="jumbotron" style=”background-color:#00F3FF” >
 
             <div class="row">    
 
@@ -47,19 +49,19 @@
                     <form id="gifForm" role="form">                               
                     
                     <div class="form-group form.example button:hover form.example::after container">
-                        <label for="topicInput">
+                        <label for="topics">
                             <h4 class="text-center">Type in a Comedian below to add a button for that comedian.</h4>
                             <h4 class="text-center">Then click on the button created to see gifs of that comedian. </h3>
                         </label>
 
-                        <input type="text" id="topicInput">
+                        <input type="text" id="user-input">
                     </div>
                    
                    
                    <div class="align-middle">
-                    <input id="addGif" type="submit" value="Add A Comedian" class="btn btn-primary">
+                    <input id= "user-input" type="submit" value="Add A Comedian" class="btn btn-primary">
                
-                    <input id="removeGif" type="submit" value="Clear" class="btn btn-primary">	
+                    <input id= "submitPress" type="submit" value="Clear" class="btn btn-primary">	
                
                    </form>
                    </div>
@@ -72,7 +74,7 @@
             
         </div>
 
-        <div class="row2 gifButtonsArea"></div>
+        <div class="row" id= "display-buttons"></div>
          
         <!--Where Gifs Will Populate-->
 
@@ -80,10 +82,14 @@
                         
                     <!-- gifs -->
             
-                    <div class="displayed-images"></div>	
+                    <div class="row" id="display-images"></div>	
              
         </div>
     
   
-    </body>
+ 
+
+<script type="text/javascript" src="assets/js/app.js"></script>
+
+</body>
 </html>

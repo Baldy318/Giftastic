@@ -1,102 +1,91 @@
+$(document).ready(function(){
 
-var topics = ['Amy Poehler','Amy Schumer','Aziz Ansari','Bernie Mac','Betty White','Bill Marr','Cedric the Entertainer','Chelsea Handler','Chris Rock','Dave Chapelle', 'David Letterman','DL Hughley', 'Eddie Murpy', 'George Carlin','Issa Rae','Jerry Seinfeld','Jim Carrey','Jimmy Fallon','Jon Stewart','Julia Louis-Dreyfus','Kevin Hart','Lena Dunham','Louis C.K.','Martin Lawrence','Mindy Kaling', 'Richard Pryor','Ricky Gervais','Rodney Dangerfield', 'Sarah Silverman', 'Steve Martin','Taraji Henson','Tiffany Haddish','Tracee Ellis Ross', 'Wanda Sykes','Whoopi Goldberg','Will Smith','Yvonne Orji','Zach Galifianakis'];
-
-var button;
-var newTopic = ""; 
+var topicButtons = ['Amy Poehler','Amy Schumer','Aziz Ansari','Bernie Mac','Betty White','Bill Marr','Cedric the Entertainer','Chelsea Handler','Chris Rock','Dave Chapelle', 'David Letterman','DL Hughley', 'Eddie Murpy', 'George Carlin','Issa Rae','Jerry Seinfeld','Jim Carrey','Jimmy Fallon','Jon Stewart','Julia Louis-Dreyfus','Kevin Hart','Lena Dunham','Louis C.K.','Martin Lawrence','Mindy Kaling', 'Richard Pryor','Ricky Gervais','Rodney Dangerfield', 'Sarah Silverman', 'Steve Martin','Taraji Henson','Tiffany Haddish','Tracee Ellis Ross', 'Wanda Sykes','Whoopi Goldberg','Will Smith','Yvonne Orji','Zach Galifianakis'];
 
 
 //To add new buttons from the topics array
 
-var buttonGenerator = function (){
+function displayImg(){
 
-    // the previous div elements are emptied 
-	 $("#gifbuttonsArea").empty();
+	$("#display-images").empty();
+	var input = $(this).attr("data-name");
+	var limit = 10;
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=BpZqJnrYUaDiSPQJ35vdmmTTULuETwmX";
 
-     // loops through the array and creates buttons
-	for(i = 0; i < topics.length; i++) {
-		button = $("<button type=" + "button" + ">" + topics[i] + "</button>").addClass("btn btn-warning").attr("data",topics[i]);
-		$("#gifbuttonsArea").append(button);
-	};
-}
-
-
-// The user clicks on a generated button which results in 10 gifs. 
-$("#gifbuttons").on("click", ".btn", function(){
-  		var thing = $(this).attr("data");
-  		var queryURL = "https://api.giphy.com/v1/gifs/search?q=&api_key=BpZqJnrYUaDiSPQJ35vdmmTTULuETwmX" + comedian + "&limit=10&rating=R&lang=en";
-
-      $("gifButtons").show();
-      
-  		$.ajax({
-  			url: queryURL,
-  			method: "GET" 
-
-  		}).done(function(response){
+	$.ajax({
+  		url: queryURL,
+  		method: "GET" 
+    	}).done(function(response){
   		  			
-          	var results = response.data;
+			for(var i = 0; i < limit; i++) {    
 
-          	for (var i = 0; i < results.length; i++) {
-						
-							// Here is a div made for any comedian
-	          	var topicDiv = $("<div>");
-	 			
-	      // Under every gif, this is where its rating will be displayed
-	 			var p = $("<p>");
-	 			p.text(results[i].rating);
-	 			var p = $("<p>").text("Rating: " + results[i].rating);
+                var topicDiv = $("<div>");
+                topicDiv.addClass("holder");
+            
+                var image = $("<img>");
+                image.attr("src", response.data[i].images.original_still.url);
+                image.attr("data-still", response.data[i].images.original_still.url);
+                image.attr("data-animate", response.data[i].images.original.url);
+                image.attr("data-state", "still");
+                image.attr("class", "gif");
+                topicDiv.append(image);
 
-	 			// This is used to create a distinction by coloring the borders around the gifs
-	 			var topicImage = $("<img>").addClass("blueBorder");
+                var rating = response.data[i].rating;
+                console.log(response);
+                var pRating = $("<p>").text("Rating: " + rating);
+                topicDiv.append(pRating)
 
-	 			// To change the states of the gif (animate/still) 
-	 			topicImage.attr("src", results[i].images.fixed_height_still.url);
-	 			topicImage.attr("data-still", results[i].images.fixed_height_still.url);
-	 			topicImage.attr("data-animate", results[i].images.fixed_height.url)
-	 			topicImage.attr("data-state", "still")
-	 			topicImage.addClass("gif");
-	 			
-	 			// The image is appended to the div
-	 			topicDiv.append(topicImage);
-	 			// The rating is appended to the div below the gif
-	 			topicDiv.append(p); 			
-	 			// new images will be placed at the beginning (top) of the containing gif area
-	 			$("#gifArea").prepend(topicDiv);        
- 			}
-  		})
-  })
+                $("#display-images").append(topicDiv);
+            }
+        });
+    }
 
+    function renderButtons(){ 
 
-// Upon clicking, the gif animates. Upon clicking again, it pauses.
-$("#displayed-images").on("click", ".gif", function(event){
-	event.preventDefault();
-	
-	// gets the current state of the clicked gif 
-	var state = $(this).attr("data-state");
-	
-	// according to the current state gifs toggle between animate and still 
-	if (state === "still") {
-    $(this).attr("src", $(this).attr("data-animate"));
-    $(this).attr("data-state", "animate");
-  } else {
-    $(this).attr("src", $(this).attr("data-still"));
-    $(this).attr("data-state", "still");
-  }
-})
-   
-//Prevents Default
-$(".addGif").on("click", function(event){
-	event.preventDefault();
+        $("#display-buttons").empty();
 
+        for (var j = 0; j < topicButtons.length; j++){
 
-	// sets inputted value to newTopic 
-	newTopic = $("#topic-input").val();
-	// new topic is added to the topics array 
-	topics.push(newTopic);
-	console.log(topics);
-	// call the function that creates the new button
-	buttonGenerator();
+            var newButton = $("<button>") 
+            newButton.attr("class", "btn btn-default");
+            newButton.attr("id", "input")  
+            newButton.attr("data-name", topicButtons[j]); 
+            newButton.text(topicButtons[j]); 
+            $("#display-buttons").append(newButton); 
+        }
+    }
+
+    function imageChangeState() {          
+
+        var state = $(this).attr("data-state");
+        var animateImage = $(this).attr("data-animate");
+        var stillImage = $(this).attr("data-still");
+
+        if(state == "still") {
+            $(this).attr("src", animateImage);
+            $(this).attr("data-state", "animate");
+        }
+
+        else if(state == "animate") {
+            $(this).attr("src", stillImage);
+            $(this).attr("data-state", "still");
+        }   
+    }
+
+    $("#submitPress").on("click", function(){
+
+        var input = $("#user-input").val().trim();
+        form.reset();
+        topicButtons.push(input);
+                
+        renderButtons();
+
+        return false;
+    })
+
+    renderButtons();
+
+    $(document).on("click", "#input", displayImg);
+    $(document).on("click", ".gif", imageChangeState);
+
 });
-
-
-
-buttonGenerator();
